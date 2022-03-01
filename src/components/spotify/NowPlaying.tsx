@@ -41,14 +41,6 @@ export const Player: React.FC<IPlayerProps> = ({
     <ConvertSVG
       height="125"
       width="466">
-      <Text
-        id="title"
-        color="#c9d1d9"
-        size="title"
-        weight="bold">
-        { isPlaying ? 'currently jamming out to' : 'last jammed out to' }
-      </Text>
-
       <div className="now-playing-wrapper">
         {track && <div className="bar-container left">
             {[0, 1, 2].map((bar) => (
