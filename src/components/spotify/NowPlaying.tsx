@@ -43,7 +43,7 @@ export const Player: React.FC<IPlayerProps> = ({
       width="466">
       <Text
         id="title"
-        color="#c58545"
+        color="#c9d1d9"
         size="title"
         weight="bold">
         { isPlaying ? 'currently jamming out to' : 'last jammed out to' }
