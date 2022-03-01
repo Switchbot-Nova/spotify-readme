@@ -1,31 +1,41 @@
+// Packages
 import React from 'react';
 
-import ConvertSVG from '../ConvertSVG';
-import Text from '../Text';
+// Local Imports
+import ConvertSVG from '../general/ConvertSVG';
+import { NOW_PLAYING_CSS } from './config';
+import Text from '../general/Text';
+
+// Types
+import {
+  IAudioFeaturesResponse,
+  IConvertedTrackObject,
+} from '../../types/spotify';
 
 export interface IPlayerProps {
-  cover?: string;
-  track: string;
-  artist: string;
-  progress: number;
+  audioFeatures: IAudioFeaturesResponse;
   duration: number;
   isPlaying: boolean;
-  audioFeatures: IAudioFeaturesResponse;
+  progress: number;
+  track: IConvertedTrackObject;
 }
 
 /**
- * Displays currently playing track
+ * Displays currently playing track.
  *
- * @param {IPlayerProps} nowPlaying Currently playing context
+ * @param {IAudioFeaturesResponse} audioFeatures Audio features of currently playing track.
+ * @param {number} duration Duration of currently playing track in milliseconds.
+ * @param {boolean} isPlaying Whether or not the player is currently playing.
+ * @param {number} progress Progress of currently playing track in milliseconds.
+ * @param {IConvertedTrackObject} track Converted track object.
+ * @returns {React.FC} Functional React component.
  */
 export const Player: React.FC<IPlayerProps> = ({
-  cover,
-  track,
-  artist,
-  progress,
+  audioFeatures,
   duration,
   isPlaying,
-  audioFeatures,
+  progress,
+  track,
 }: IPlayerProps) => {
   return (
     <ConvertSVG
@@ -36,7 +46,7 @@ export const Player: React.FC<IPlayerProps> = ({
         color="#c58545"
         size="title"
         weight="bold">
-        { isPlaying ? '' : '' }
+        { isPlaying ? 'currently jamming out to' : 'last jammed out to' }
       </Text>
 
       <div className="now-playing-wrapper">
@@ -62,18 +72,18 @@ export const Player: React.FC<IPlayerProps> = ({
             borderRadius: '.3rem',
             margin: '.5rem 0',
             padding: '.6rem',
-            paddingLeft: 8,
+            paddingLeft: 4,
             paddingTop: 8,
           }}>
           <img
             id="cover"
             height="48"
-            src={ cover ?? null }
+            src={ track.image ?? null }
             width="48" />
 
           <div
             style={{
-              color: '#c58545'
+              color: '#c58545',
               display: 'flex',
               flex: 1,
               flexDirection: 'column',
@@ -84,14 +94,14 @@ export const Player: React.FC<IPlayerProps> = ({
               color="#c58545"
               id="track"
               weight="bold">
-              { `${track ?? ''} `.trim() }
+              { `${track.name ?? ''} `.trim() }
             </Text>
 
             <Text
               color="#c58545"
               id="artist"
               size="small">
-              { artist || 'Nothing Currently' }
+              { track.artist || 'Nothing Currently' }
             </Text>
             {track && (
               <div className="progress-bar">
